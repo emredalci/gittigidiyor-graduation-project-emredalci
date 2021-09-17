@@ -18,7 +18,7 @@ public class CreditScore {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 11)
     private String nationalId;
 
     @Column(nullable = false)
