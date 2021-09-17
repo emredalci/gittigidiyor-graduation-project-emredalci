@@ -15,21 +15,21 @@ public class InitializerRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        CreditScore creditScore1 = CreditScore.builder().nationalId("11111111110").score(600).build();
-        CreditScore creditScore2 = CreditScore.builder().nationalId("11111111112").score(600).build();
-        CreditScore creditScore3 = CreditScore.builder().nationalId("11111111113").score(600).build();
+        CreditScore creditScore1 = CreditScore.builder().nationalId("11111111110").score(200).build();
+        CreditScore creditScore2 = CreditScore.builder().nationalId("11111111112").score(300).build();
+        CreditScore creditScore3 = CreditScore.builder().nationalId("11111111113").score(500).build();
         CreditScore creditScore4 = CreditScore.builder().nationalId("11111111114").score(600).build();
-        CreditScore creditScore5 = CreditScore.builder().nationalId("11111111115").score(600).build();
-        CreditScore creditScore6 = CreditScore.builder().nationalId("11111111116").score(600).build();
-        CreditScore creditScore7 = CreditScore.builder().nationalId("11111111117").score(600).build();
-        CreditScore creditScore8 = CreditScore.builder().nationalId("11111111118").score(600).build();
-        CreditScore creditScore9 = CreditScore.builder().nationalId("11111111119").score(600).build();
-        CreditScore creditScore10 = CreditScore.builder().nationalId("11111111100").score(600).build();
-        CreditScore creditScore11 = CreditScore.builder().nationalId("11111111110").score(600).build();
-        CreditScore creditScore12 = CreditScore.builder().nationalId("11111111120").score(600).build();
-        CreditScore creditScore13 = CreditScore.builder().nationalId("11111111130").score(600).build();
-        CreditScore creditScore14 = CreditScore.builder().nationalId("11111111140").score(600).build();
-        CreditScore creditScore15 = CreditScore.builder().nationalId("11111111150").score(600).build();
+        CreditScore creditScore5 = CreditScore.builder().nationalId("11111111115").score(700).build();
+        CreditScore creditScore6 = CreditScore.builder().nationalId("11111111116").score(800).build();
+        CreditScore creditScore7 = CreditScore.builder().nationalId("11111111117").score(900).build();
+        CreditScore creditScore8 = CreditScore.builder().nationalId("11111111118").score(1000).build();
+        CreditScore creditScore9 = CreditScore.builder().nationalId("11111111119").score(1500).build();
+        CreditScore creditScore10 = CreditScore.builder().nationalId("11111111100").score(2000).build();
+        CreditScore creditScore11 = CreditScore.builder().nationalId("11111111110").score(3000).build();
+        CreditScore creditScore12 = CreditScore.builder().nationalId("11111111120").score(400).build();
+        CreditScore creditScore13 = CreditScore.builder().nationalId("11111111130").score(200).build();
+        CreditScore creditScore14 = CreditScore.builder().nationalId("11111111140").score(150).build();
+        CreditScore creditScore15 = CreditScore.builder().nationalId("11111111150").score(1000).build();
 
         creditScoreRepository.save(creditScore1);
         creditScoreRepository.save(creditScore2);
