@@ -1,0 +1,24 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: customer-service
+  datasource:
+    url: jdbc:h2:mem:userdb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  cloud:
+    config:
+      import-check:
+        enabled: false
+
+logging:
+  file:
+    path: C:\
