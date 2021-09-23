@@ -1,5 +1,6 @@
 package dev.patika.customerservice.util;
 
+import dev.patika.customerservice.exception.CreditResultNotCreatedException;
 import dev.patika.customerservice.model.CreditResult;
 import dev.patika.customerservice.model.Customer;
 import dev.patika.customerservice.model.enumeration.Status;
@@ -17,7 +18,7 @@ public class CalculateCreditResult {
         }else if(score >=1000){
             return CreditResult.builder().status(Status.ACCEPT).creditLimit(income*4).customerNationalId(nationalId).build();
         }else{
-            throw new RuntimeException(ErrorMessage.CREDIT_RESULT_NOT_CREATED);
+            throw new CreditResultNotCreatedException(ErrorMessage.CREDIT_RESULT_NOT_CREATED);
         }
 
 
