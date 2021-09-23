@@ -25,4 +25,9 @@ public class CustomerController {
     public ResponseEntity<CustomerResponseDTO> updateCustomer(@RequestBody @Valid CustomerUpdateDTO customerUpdateDTO, @PathVariable String nationalId){
         return ResponseEntity.ok(customerService.updateCustomer(customerUpdateDTO,nationalId));
     }
+
+    @DeleteMapping("/{nationalId}")
+    public ResponseEntity<CustomerResponseDTO> deleteCustomer(@PathVariable String nationalId){
+        return ResponseEntity.ok(customerService.deleteCustomer(nationalId));
+    }
 }
