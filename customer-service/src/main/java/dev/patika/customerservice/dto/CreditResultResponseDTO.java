@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreditResultDTO {
+public class CreditResultResponseDTO {
     @NotNull
     private Status status;
 
