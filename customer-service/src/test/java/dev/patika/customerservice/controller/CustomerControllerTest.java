@@ -65,4 +65,26 @@ class CustomerControllerTest {
 
         );
     }
+
+    @Test
+    void deleteCustomer() {
+        //given
+        CustomerResponseDTO expected = new CustomerResponseDTO();
+        when(customerService.deleteCustomer(anyString())).thenReturn(expected);
+        //when
+        String nationalId = "13758028554";
+        ResponseEntity<CustomerResponseDTO> actual =customerController.deleteCustomer(nationalId);
+        //then
+        assertAll(
+                ()-> assertNotNull(actual),
+                ()-> assertNotNull(expected),
+                ()-> assertEquals(expected.getClass(),actual.getBody().getClass()),
+                ()-> assertEquals(expected.getId(),actual.getBody().getId()),
+                ()-> assertEquals(expected.getFirstName(),actual.getBody().getFirstName()),
+                ()-> assertEquals(expected.getLastName(),actual.getBody().getLastName()),
+                ()-> assertEquals(expected.getNationalId(),actual.getBody().getNationalId()),
+                ()-> assertEquals(expected.getPhoneNumber(),actual.getBody().getPhoneNumber()),
+                ()-> assertEquals(expected.getIncome(),actual.getBody().getIncome())
+        );
+    }
 }
