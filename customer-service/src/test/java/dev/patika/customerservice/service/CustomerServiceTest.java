@@ -77,4 +77,30 @@ class CustomerServiceTest {
         );
     }
 
+    @Test
+    void deleteCustomer() {
+        //given
+        Customer customer = new Customer();
+        customer.setNationalId("13758028554");
+        CustomerResponseDTO expected = new CustomerResponseDTO();
+        when(customerRepository.findByNationalId(anyString())).thenReturn(Optional.of(customer));
+        when(customerMapper.mapFromCustomertoCustomerResponseDTO(customer)).thenReturn(expected);
+        customerRepository.deleteByNationalId(customer.getNationalId());
+        //when
+        String nationalId = "13758028554";
+        CustomerResponseDTO actual =customerService.deleteCustomer(nationalId);
+        //then
+        assertAll(
+                ()-> assertNotNull(actual),
+                ()-> assertNotNull(expected),
+                ()-> assertEquals(expected.getId(),actual.getId()),
+                ()-> assertEquals(expected.getFirstName(),actual.getFirstName()),
+                ()-> assertEquals(expected.getLastName(),actual.getLastName()),
+                ()-> assertEquals(expected.getNationalId(),actual.getNationalId()),
+                ()-> assertEquals(expected.getPhoneNumber(),actual.getPhoneNumber()),
+                ()-> assertEquals(expected.getIncome(),actual.getIncome())
+
+        );
+    }
+
 }
