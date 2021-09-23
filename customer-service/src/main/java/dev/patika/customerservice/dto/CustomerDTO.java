@@ -38,7 +38,7 @@ public class CustomerDTO {
     @NotNull(message = "Income is mandatory")
     @Range(max = 100000,min = 0,message = "Invalid income")
     @JsonProperty(required = true)
-    private double income;
+    private Double income;
 
     @ApiModelProperty(example = "05391111111")
     @NotBlank(message = "Phone number is mandatory")
