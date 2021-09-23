@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: API-GATEWAY
+  cloud:
+    config:
+      import-check:
+        enabled: false
