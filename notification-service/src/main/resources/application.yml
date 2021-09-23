@@ -1,0 +1,20 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: NOTIFICATION-SERVICE
+  cloud:
+    config:
+      import-check:
+        enabled: false
+  datasource:
+    url: jdbc:h2:mem:userdb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
