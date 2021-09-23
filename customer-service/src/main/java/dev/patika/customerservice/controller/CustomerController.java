@@ -21,6 +21,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.saveCustomer(customerDTO));
     }
 
+    @GetMapping("/{nationalId}")
+    public ResponseEntity<String> applyForLoan(@PathVariable String nationalId){
+        return ResponseEntity.ok(customerService.applyForLoan(nationalId));
+    }
+
     @PutMapping("/{nationalId}")
     public ResponseEntity<CustomerResponseDTO> updateCustomer(@RequestBody @Valid CustomerUpdateDTO customerUpdateDTO, @PathVariable String nationalId){
         return ResponseEntity.ok(customerService.updateCustomer(customerUpdateDTO,nationalId));
