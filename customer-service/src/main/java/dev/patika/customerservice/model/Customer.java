@@ -24,7 +24,7 @@ public class Customer extends AbstractBaseEntity{
     private String nationalId;
 
     @Column(nullable = false)
-    private double income;
+    private Double income;
 
     @Column(nullable = false,length = 11)
     private String phoneNumber;
