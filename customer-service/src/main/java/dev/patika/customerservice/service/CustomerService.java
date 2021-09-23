@@ -58,5 +58,18 @@ public class CustomerService implements BaseService<CustomerService>{
 
     }
 
+    public CustomerResponseDTO deleteCustomer(String nationalId){
+        logger.info("Customer Service delete customer process is started");
+        Optional<Customer> foundCustomer=customerRepository.findByNationalId(nationalId);
+        if(!foundCustomer.isPresent()){
+            logger.error("Customer Service delete customer process error : " +ErrorMessage.CUSTOMER_IS_NOT_FOUND);
+            throw new NotFoundCustomerException(ErrorMessage.CUSTOMER_IS_NOT_FOUND);
+        }
+        CustomerResponseDTO customerResponseDTO = customerMapper.mapFromCustomertoCustomerResponseDTO(foundCustomer.get());
+        customerRepository.deleteByNationalId(nationalId);
+        logger.info("Customer Service delete customer process is done successfully");
+        return customerResponseDTO;
+    }
+
 
 }
