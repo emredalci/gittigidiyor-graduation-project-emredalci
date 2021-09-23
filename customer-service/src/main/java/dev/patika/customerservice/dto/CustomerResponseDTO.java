@@ -27,7 +27,7 @@ public class CustomerResponseDTO {
     private String nationalId;
 
     @NotNull
-    private double income;
+    private Double income;
 
     @NotBlank
     private String phoneNumber;
