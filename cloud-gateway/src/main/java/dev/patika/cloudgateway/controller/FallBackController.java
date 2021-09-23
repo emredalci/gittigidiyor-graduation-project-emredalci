@@ -11,7 +11,7 @@ public class FallBackController {
         return "Customer service is taking longer than expected. Please try again ";
     }
 
-    @GetMapping("/notificationServiceServiceFallback")
+    @GetMapping("/notificationServiceFallback")
     public String notificationServiceFallBackMethod(){
         return "Notification service is taking longer than expected. Please try again";
     }

@@ -5,6 +5,34 @@ spring:
   application:
     name: API-GATEWAY
   cloud:
+    gateway:
+      routes:
+        - id: CUSTOMER-SERVICE
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/customer/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CUSTOMER-SERVICE
+                fallbackuri: forward:/customerServiceFallBack
+        - id : NOTIFICATION-SERVICE
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/notification/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: NOTIFICATION-SERVICE
+                fallbackuri: forward:/notificationServiceFallback
     config:
       import-check:
         enabled: false
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
