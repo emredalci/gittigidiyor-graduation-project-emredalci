@@ -25,7 +25,7 @@ public class CustomerUpdateDTO {
     @NotBlank(message = "Last name is mandatory")
     @Pattern(regexp = "^[\\p{L}]+([(\\s)$]?+[\\p{L}]+)+",message = "Invalid last name")
     private String lastName;
-    
+
 
     @ApiModelProperty(example = "1000")
     @NotNull(message = "Income is mandatory")
