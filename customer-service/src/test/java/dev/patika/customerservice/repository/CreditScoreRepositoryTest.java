@@ -39,7 +39,7 @@ public class CreditScoreRepositoryTest {
 
 
     @Test
-    void findCreditScore() {
+    void should_Double_When_FindCreditScore() {
         //given
         //when
         double expected=creditScoreRepository.findCreditScore(creditScore.getLastNumber());
