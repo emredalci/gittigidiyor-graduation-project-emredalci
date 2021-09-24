@@ -3,38 +3,55 @@ package dev.patika.customerservice.service;
 import dev.patika.customerservice.dto.CustomerDTO;
 import dev.patika.customerservice.dto.CustomerResponseDTO;
 import dev.patika.customerservice.dto.CustomerUpdateDTO;
+import dev.patika.customerservice.exception.CustomerIsAlreadyExistException;
+import dev.patika.customerservice.exception.NotFoundCustomerException;
 import dev.patika.customerservice.mapper.CustomerMapper;
+import dev.patika.customerservice.model.CreditResult;
 import dev.patika.customerservice.model.Customer;
+import dev.patika.customerservice.repository.CreditResultRepository;
+import dev.patika.customerservice.repository.CreditScoreRepository;
 import dev.patika.customerservice.repository.CustomerRepository;
+import dev.patika.customerservice.util.CalculateCreditResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
-
     @Mock
     CustomerRepository customerRepository;
 
     @Mock
     CustomerMapper customerMapper;
 
+    @Mock
+    RestTemplate restTemplate;
+
+    @Mock
+    CreditScoreRepository creditScoreRepository;
+
+    @Mock
+    CreditResultRepository creditResultRepository;
+
     @InjectMocks
     CustomerService customerService;
 
 
-
     @Test
-    void saveCustomer() {
+    void should_ReturnCustomerResponseDTO_When_SaveCustomer() {
+        //given
         Customer customer = new Customer();
         CustomerResponseDTO expected = new CustomerResponseDTO();
         when(customerRepository.existsByNationalId(null)).thenReturn(Boolean.FALSE);
@@ -58,7 +75,46 @@ class CustomerServiceTest {
     }
 
     @Test
-    void updateCustomer() {
+    void should_ThrowCustomerIsAlreadyExistException_WhenCustomerSave(){
+        //given
+        when(customerRepository.existsByNationalId(null)).thenReturn(Boolean.TRUE);
+        //then
+        CustomerDTO customerDTO = new CustomerDTO();
+        assertThrows(CustomerIsAlreadyExistException.class,()->customerService.saveCustomer(customerDTO));
+    }
+
+    @Test
+    void should_ReturnString_When_ApplyForLoan() {
+        //given
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setIncome(1000D);
+        double score = 600;
+        CreditResult creditResult= CalculateCreditResult.calculate(score,customer);
+        String result="example";
+        when(customerRepository.findByNationalId(anyString())).thenReturn(Optional.of(customer));
+        when(creditScoreRepository.findCreditScore(anyChar())).thenReturn(score);
+        when(creditResultRepository.save(creditResult)).thenReturn(creditResult);
+        when(restTemplate.getForEntity(anyString(),eq(String.class))).thenReturn(new ResponseEntity(result, HttpStatus.OK));
+        //when
+        String nationalId = "13758028554";
+        String actual = customerService.applyForLoan(nationalId);
+        //then
+        assertAll(
+                ()-> assertNotNull(actual)
+        );
+    }
+
+    @Test
+    void should_ThrowNotFoundCustomerException_WhenNotFoundCustomerInApplyForLoan(){
+        assertThrows(NotFoundCustomerException.class,()-> customerService.applyForLoan(anyString()));
+
+    }
+
+
+
+    @Test
+    void should_ReturnCustomerDTO_When_UpdateCustomer() {
         //given
         Customer customer = new Customer();
         CustomerResponseDTO expected = new CustomerResponseDTO();
@@ -78,7 +134,16 @@ class CustomerServiceTest {
     }
 
     @Test
-    void deleteCustomer() {
+    void should_ThrowNotFoundCustomerException_WhenNotFoundCustomerInUpdateCustomer(){
+        CustomerUpdateDTO customerUpdateDTO = new CustomerUpdateDTO();
+        String nationalId = "13758028554";
+        assertThrows(NotFoundCustomerException.class,()-> customerService.updateCustomer(customerUpdateDTO,nationalId));
+
+    }
+
+
+    @Test
+    void should_ReturnCustomerResponseDTO_When_DeleteCustomer() {
         //given
         Customer customer = new Customer();
         customer.setNationalId("13758028554");
@@ -102,5 +167,12 @@ class CustomerServiceTest {
 
         );
     }
+
+    @Test
+    void should_ThrowNotFoundCustomerException_WhenNotFoundCustomerInDeleteByNationalId(){
+        String nationalId = "13758028554";
+        assertThrows(NotFoundCustomerException.class,()-> customerService.deleteCustomer(nationalId));
+    }
+
 
 }
