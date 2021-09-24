@@ -14,7 +14,7 @@ spring:
           filters:
             - name: CircuitBreaker
               args:
-                name: CUSTOMER-SERVICE
+                name: customer-service
                 fallbackuri: forward:/customerServiceFallBack
         - id : NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
@@ -35,4 +35,11 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 40000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
