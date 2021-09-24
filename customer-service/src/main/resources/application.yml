@@ -23,4 +23,4 @@ spring:
 
 logging:
   file:
-    path: C:\
+    path: C:\CUSTOMER-SERVICE
