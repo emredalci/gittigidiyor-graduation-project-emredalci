@@ -8,6 +8,7 @@ import dev.patika.customerservice.exception.NotFoundCustomerException;
 import dev.patika.customerservice.mapper.CustomerMapper;
 import dev.patika.customerservice.model.CreditResult;
 import dev.patika.customerservice.model.Customer;
+import dev.patika.customerservice.model.enumeration.Status;
 import dev.patika.customerservice.repository.CreditResultRepository;
 import dev.patika.customerservice.repository.CreditScoreRepository;
 import dev.patika.customerservice.repository.CustomerRepository;
@@ -91,10 +92,12 @@ public class CustomerService implements BaseService<CustomerService>{
         double score = creditScoreRepository.findCreditScore(lastNumber);
         CreditResult creditResult= CalculateCreditResult.calculate(score,customer.get());
         creditResultRepository.save(creditResult);
-        logger.info("Notification service is calling");
-        ResponseEntity<String> smsNotification =
-                restTemplate.getForEntity("http://NOTIFICATION-SERVICE/notification/"+nationalId+"/"+customer.get().getPhoneNumber(),String.class);
-        logger.info(smsNotification.getBody());
+        if(creditResult.getStatus().equals(Status.ACCEPT)){
+            logger.info("Notification service is calling");
+            ResponseEntity<String> smsNotification =
+                    restTemplate.getForEntity("http://NOTIFICATION-SERVICE/notification/"+nationalId+"/"+customer.get().getPhoneNumber(),String.class);
+            logger.info(smsNotification.getBody());
+        }
         logger.info("Customer Service credit card application process is done successfully");
         return creditResult.toString();
 
