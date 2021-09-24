@@ -3,6 +3,8 @@ package dev.patika.customerservice.controller;
 import dev.patika.customerservice.dto.CustomerDTO;
 import dev.patika.customerservice.dto.CustomerResponseDTO;
 import dev.patika.customerservice.dto.CustomerUpdateDTO;
+import dev.patika.customerservice.model.CreditResult;
+import dev.patika.customerservice.model.enumeration.Status;
 import dev.patika.customerservice.service.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +28,7 @@ class CustomerControllerTest {
     CustomerController customerController;
 
     @Test
-    void saveCustomer() {
+    void should_ReturnResponseEntityCustomerResponseDTO_When_SaveCustomer() {
         //when
         CustomerResponseDTO expected = new CustomerResponseDTO();
         when(customerService.saveCustomer(any())).thenReturn(expected);
@@ -49,7 +51,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void updateCustomer() {
+    void should_ReturnResponseEntityCustomerResponseDTO_When_UpdateCustomer() {
         //given
         CustomerResponseDTO expected = new CustomerResponseDTO();
         when(customerService.updateCustomer(any(),anyString())).thenReturn(expected);
@@ -67,7 +69,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void deleteCustomer() {
+    void should_ReturnResponseEntityCustomerResponseDTO_when_DeleteCustomer() {
         //given
         CustomerResponseDTO expected = new CustomerResponseDTO();
         when(customerService.deleteCustomer(anyString())).thenReturn(expected);
@@ -85,6 +87,27 @@ class CustomerControllerTest {
                 ()-> assertEquals(expected.getNationalId(),actual.getBody().getNationalId()),
                 ()-> assertEquals(expected.getPhoneNumber(),actual.getBody().getPhoneNumber()),
                 ()-> assertEquals(expected.getIncome(),actual.getBody().getIncome())
+        );
+    }
+
+    @Test
+    void should_ReturnResponseEntityString_When_ApplyForLoan() {
+        //given
+        CreditResult creditResult = new CreditResult();
+        creditResult.setCreditLimit(1000);
+        creditResult.setStatus(Status.ACCEPT);
+        String expected = creditResult.toString();
+        when(customerService.applyForLoan(any())).thenReturn(expected);
+        //when
+        String nationalId= "13758028554";
+        ResponseEntity<String> actual = customerController.applyForLoan(nationalId);
+        //then
+        assertAll(
+                ()-> assertNotNull(actual),
+                ()-> assertNotNull(expected),
+                ()-> assertEquals(expected.getClass(),actual.getBody().getClass()),
+                ()-> assertEquals(expected,actual.getBody())
+
         );
     }
 }
