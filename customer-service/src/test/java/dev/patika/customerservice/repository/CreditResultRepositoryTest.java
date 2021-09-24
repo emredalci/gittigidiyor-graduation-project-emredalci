@@ -48,7 +48,7 @@ public class CreditResultRepositoryTest {
 
 
     @Test
-    void findAllByCustomerNationalId() {
+    void should_ReturnListCreditResult_When_FindAllByCustomerNationalId() {
         //given
         //when
         List<CreditResult> actaul = creditResultRepository.findAllByCustomerNationalId(creditResult.getCustomerNationalId());
