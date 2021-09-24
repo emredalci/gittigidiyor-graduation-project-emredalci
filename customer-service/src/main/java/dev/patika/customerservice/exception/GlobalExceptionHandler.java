@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         ErrorResponse response = prepareErrorResponse(HttpStatus.BAD_REQUEST,exception.getMessage());
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
-
+    /*
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<ErrorResponse> handleException(HttpRequestMethodNotSupportedException exception){
@@ -60,6 +60,8 @@ public class GlobalExceptionHandler {
         ErrorResponse response = prepareErrorResponse(HttpStatus.BAD_REQUEST,exception.getMessage());
         return new ResponseEntity<>(response ,HttpStatus.BAD_REQUEST);
     }
+
+     */
 
 
 

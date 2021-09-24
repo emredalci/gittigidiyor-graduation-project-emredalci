@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class FallBackController {
 
     @GetMapping("/customerServiceFallBack")
-    public String customerServiceFallBackMethod(){
+    public String customerServiceFallBackMethod() {
         return "Customer service is taking longer than expected. Please try again ";
     }
 
     @GetMapping("/notificationServiceFallback")
-    public String notificationServiceFallBackMethod(){
+    public String notificationServiceFallBackMethod() {
         return "Notification service is taking longer than expected. Please try again";
     }
 }
