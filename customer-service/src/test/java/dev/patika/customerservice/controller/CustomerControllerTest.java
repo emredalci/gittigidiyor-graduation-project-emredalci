@@ -13,6 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -109,5 +112,21 @@ class CustomerControllerTest {
                 ()-> assertEquals(expected,actual.getBody())
 
         );
+    }
+
+    @Test
+    void should_ReturnResponseEntityListCustomerResponseDTO_When_FindAllCustomers(){
+        //given
+        List<CustomerResponseDTO> expected = new ArrayList<>();
+        when(customerService.findAllCustomers()).thenReturn(expected);
+        //when
+        ResponseEntity<List<CustomerResponseDTO>> actual = customerController.findAllCustomers();
+
+        //then
+        assertAll(
+                ()-> assertEquals(expected.size(),actual.getBody().size())
+        );
+
+
     }
 }
