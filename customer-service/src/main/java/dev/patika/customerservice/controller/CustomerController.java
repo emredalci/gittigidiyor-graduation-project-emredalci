@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +20,11 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerResponseDTO> saveCustomer(@RequestBody @Valid CustomerDTO customerDTO){
         return ResponseEntity.ok(customerService.saveCustomer(customerDTO));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CustomerResponseDTO>> findAllCustomers(){
+        return ResponseEntity.ok(customerService.findAllCustomers());
     }
 
     @GetMapping("/{nationalId}")
