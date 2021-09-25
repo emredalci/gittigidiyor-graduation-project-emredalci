@@ -21,11 +21,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -172,6 +176,27 @@ class CustomerServiceTest {
     void should_ThrowNotFoundCustomerException_WhenNotFoundCustomerInDeleteByNationalId(){
         String nationalId = "13758028554";
         assertThrows(NotFoundCustomerException.class,()-> customerService.deleteCustomer(nationalId));
+    }
+
+    @Test
+    void should_ReturnListCustomerResponseDT_When_FindAllCustomers(){
+        //given
+        Customer customer = new Customer("Emre","Dalcı","13758028554",1000D,"05395064707");
+        customer.setId(1L);
+        customer.setCreatedDate(Instant.now());
+        customer.setLastModifiedDate(Instant.now());
+        List<Customer> listOfCustomers = Collections.singletonList(customer);
+        CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
+        when(customerRepository.findAll()).thenReturn(listOfCustomers);
+        when(customerMapper.mapFromCustomertoCustomerResponseDTO(any(Customer.class))).thenReturn(customerResponseDTO);
+        //when
+        List<CustomerResponseDTO> actual=customerService.findAllCustomers();
+        //then
+        assertAll(
+                ()-> assertEquals(1,actual.size()),
+                ()-> assertEquals(customerResponseDTO,actual.get(0)),
+                ()-> verify(customerMapper).mapFromCustomertoCustomerResponseDTO(customer)
+        );
     }
 
 
