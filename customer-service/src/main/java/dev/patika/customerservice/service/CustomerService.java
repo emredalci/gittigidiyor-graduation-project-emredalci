@@ -36,6 +36,15 @@ public class CustomerService implements BaseService<CustomerService>{
 
     Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
+    /** The method implements the customer save operation. If the customer already exist in the database, the method
+     * throws an exception(CustomerIsAlreadyExistException). If no customer exist in the database, the saving process
+     * will be done successfully on the condition that fields are correct.
+     *
+     * @param customerDTO customer data transfer object. Created to not ask for unnecessary information from
+     *                    the client
+     * @return CustomerResponseDTO. customer response data transfer object.
+     *                    Created to be able to hide some fields from client
+     */
     public CustomerResponseDTO saveCustomer(CustomerDTO customerDTO){
         logger.info("Customer Service saving process is started");
         boolean isExist = customerRepository.existsByNationalId(customerDTO.getNationalId());
@@ -50,6 +59,19 @@ public class CustomerService implements BaseService<CustomerService>{
         return  customerResponseDTO;
 
     }
+
+    /** The method implements the customer update processs. The nationalId field is necessary to find customers
+     * from database. The registered customer's national id can not be changed. So, the national id field does not
+     * exist in customerUpdateDTO.
+     *  If the customer does not exist in the database the method throws an exception(NotFoundCustomerException).
+     *  If all conditions are correct, the update process will be done successfully.
+     *
+     * @param customerUpdateDTO customer data transfer obejct for update process.
+     *                          Created to not ask for unnecessary information from the client
+     * @param nationalId national id. This field is necessary to get customer from database
+     * @return CustomerResponseDTO customer response data transfer object.
+                                  Created to be able to hide some fields from client
+     */
 
     public CustomerResponseDTO updateCustomer(CustomerUpdateDTO customerUpdateDTO, String nationalId){
         logger.info("Customer Service update customer process is started");
@@ -68,6 +90,15 @@ public class CustomerService implements BaseService<CustomerService>{
 
     }
 
+    /** The method implements the customer delete processs. If the customer does not exist in the database,
+     * the method throw an exception(NotFoundCustomerException).
+     * If the customer exists in the database, the delete process will be done successfully.
+     *
+     * @param nationalId national id. This field is necessary to delete customer from database
+     * @return CustomerResponseDTO. customer response data transfer object.
+     *                            Created to be able to hide some fields from client
+     */
+
     public CustomerResponseDTO deleteCustomer(String nationalId){
         logger.info("Customer Service delete customer process is started");
         Optional<Customer> foundCustomer=customerRepository.findByNationalId(nationalId);
@@ -80,6 +111,15 @@ public class CustomerService implements BaseService<CustomerService>{
         logger.info("Customer Service delete customer process is done successfully");
         return customerResponseDTO;
     }
+
+    /** The method implements apply loan processs. If the customer does not exist in the database,
+     * the method throw an exception(NotFoundCustomerException).
+     * If the credit result is rejected, the notification service call will not works. But the result will be save
+     * in database
+     * If the credit result is accepted, the notification service call will works.
+     * @param nationalId national id. This field is necessary to apply for loan.
+     * @return String. The method returns CreditResult entity as string.
+     */
 
     public String applyForLoan(String nationalId){
         logger.info("Customer Service credit card application process is started");
