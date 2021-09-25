@@ -25,21 +25,12 @@ spring:
               args:
                 name: NOTIFICATION-SERVICE
                 fallbackuri: forward:/notificationServiceFallback
+      filter:
+        circuit-breaker:
+          enabled: true
     config:
       import-check:
         enabled: false
 
-hystrix:
-  command:
-    fallbackcmd:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 40000
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: hystrix.stream
 

@@ -11,10 +11,6 @@ import org.springframework.web.reactive.DispatcherHandler;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableHystrix
-@ConditionalOnClass({DispatcherHandler.class,
-        ReactiveResilience4JAutoConfiguration.class,
-        HystrixCircuitBreakerAutoConfiguration.class})
 public class CloudGatewayApplication {
 
     public static void main(String[] args) {
