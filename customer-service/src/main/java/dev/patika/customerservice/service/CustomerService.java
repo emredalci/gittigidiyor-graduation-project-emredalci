@@ -22,7 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -143,5 +145,15 @@ public class CustomerService implements BaseService<CustomerService>{
 
     }
 
-
+    /** The method implements the customer find processs.
+     * If customer does not exist, the method return empty list.
+     *
+     * @return CustomerResponseDTO list.
+     */
+    public List<CustomerResponseDTO> findAllCustomers() {
+        return customerRepository.findAll()
+                .stream()
+                .map(customerMapper::mapFromCustomertoCustomerResponseDTO)
+                .collect(Collectors.toList());
+    }
 }
