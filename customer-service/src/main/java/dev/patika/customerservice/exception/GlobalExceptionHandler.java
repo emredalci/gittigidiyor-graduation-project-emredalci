@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.net.BindException;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +45,19 @@ public class GlobalExceptionHandler {
         ErrorResponse response = prepareErrorResponse(HttpStatus.BAD_REQUEST,exception.getMessage());
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
-    /*
+
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<ErrorResponse> handleException(HttpRequestMethodNotSupportedException exception){
         ErrorResponse response = prepareErrorResponse(HttpStatus.METHOD_NOT_ALLOWED,exception.getMessage());
         return new ResponseEntity<>(response,HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler({ConnectException.class})
+    @ResponseStatus(HttpStatus.GATEWAY_TIMEOUT)
+    public ResponseEntity<ErrorResponse> handleException(ConnectException exception){
+        ErrorResponse response = prepareErrorResponse(HttpStatus.GATEWAY_TIMEOUT,exception.getMessage());
+        return new ResponseEntity<>(response,HttpStatus.GATEWAY_TIMEOUT);
     }
 
 
@@ -61,10 +69,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response ,HttpStatus.BAD_REQUEST);
     }
 
-     */
 
-
-
+    
     @ExceptionHandler({JsonParseException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleException(JsonParseException exception){
