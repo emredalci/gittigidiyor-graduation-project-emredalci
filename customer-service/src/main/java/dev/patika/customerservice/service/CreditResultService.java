@@ -22,6 +22,13 @@ public class CreditResultService implements BaseService<CreditResultService>{
 
     Logger logger = LoggerFactory.getLogger(CreditResultService.class);
 
+    /** The method implements the get the credit result process.
+     * If the credit results of customer does not exist, the method return empty list.
+     *
+     * @param nationalId national id. This field is necessary to get credit results of customers from the database
+     * @return List<CreditResultResponseDTO>. The customer's credit results as list in data transfer object
+     */
+
     public List<CreditResultResponseDTO> findByNationalId(String nationalId){
         logger.info("Credit result service finding customer by national id process is started.");
         return creditResultRepository.findAllByCustomerNationalId(nationalId)
