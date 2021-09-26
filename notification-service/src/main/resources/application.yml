@@ -23,4 +23,4 @@ spring:
 
 logging:
   file:
-    path: C:\CUSTOMER-SERVICE
+    path: C:\NOTIFICATION-SERVICE
