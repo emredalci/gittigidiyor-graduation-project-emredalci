@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import dev.patika.customerservice.model.ErrorResponse;
 import dev.patika.customerservice.model.ErrorResponseValidation;
 import dev.patika.customerservice.repository.ErrorResponseRepository;
+import dev.patika.customerservice.repository.ErrorResponseValidationRepository;
 import dev.patika.customerservice.util.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
     private final ErrorResponseRepository errorResponseRepository;
+    private final ErrorResponseValidationRepository errorResponseValidationRepository;
 
     @ExceptionHandler({CustomerIsAlreadyExistException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -70,7 +72,6 @@ public class GlobalExceptionHandler {
     }
 
 
-    
     @ExceptionHandler({JsonParseException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleException(JsonParseException exception){
@@ -82,8 +83,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<List<ErrorResponseValidation>> handleException(MethodArgumentNotValidException exception){
         List<ErrorResponseValidation> errorResponseValidationList = new ArrayList<>();
-        for (FieldError fieldError:exception.getFieldErrors())
-            errorResponseValidationList.add(new ErrorResponseValidation(HttpStatus.BAD_REQUEST.value(),fieldError.getField(),fieldError.getDefaultMessage()));
+        for (FieldError fieldError:exception.getFieldErrors()){
+            ErrorResponseValidation responseValidation= prepareErrorResponseValidation(HttpStatus.BAD_REQUEST, fieldError.getField(), fieldError.getDefaultMessage());
+            errorResponseValidationRepository.save(responseValidation);
+            errorResponseValidationList.add(responseValidation);
+        }
+
         return new ResponseEntity<>(errorResponseValidationList,HttpStatus.BAD_REQUEST);
     }
 
@@ -95,5 +100,14 @@ public class GlobalExceptionHandler {
         response.setMessage(message);
         errorResponseRepository.save(response);
         return response;
+    }
+
+    private ErrorResponseValidation prepareErrorResponseValidation(HttpStatus httpStatus,String field,String rule){
+        ErrorResponseValidation responseValidation = new ErrorResponseValidation();
+        responseValidation.setStatus(httpStatus.value());
+        responseValidation.setField(field);
+        responseValidation.setRule(rule);
+        errorResponseValidationRepository.save(responseValidation);
+        return responseValidation;
     }
 }
