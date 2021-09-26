@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -85,6 +86,7 @@ public class CustomerService implements BaseService<CustomerService>{
         }
 
         CustomerMapper.INSTANCE.mapFromCustomerUpdateDTOtoCustomer(customerUpdateDTO,customer.get());
+        customer.get().setLastModifiedDate(Instant.now());
         customerRepository.save(customer.get());
         CustomerResponseDTO customerResponseDTO = customerMapper.mapFromCustomertoCustomerResponseDTO(customer.get());
         logger.info("Customer Service update customer process is done successfully");
