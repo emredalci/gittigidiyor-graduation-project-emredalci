@@ -43,6 +43,7 @@ public class CreditResultRepositoryTest {
     @AfterEach
     public void cleanUp(){
         creditResult = null;
+        creditResultRepository.deleteAll();
     }
 
 
@@ -51,13 +52,13 @@ public class CreditResultRepositoryTest {
     void should_ReturnListCreditResult_When_FindAllByCustomerNationalId() {
         //given
         //when
-        List<CreditResult> actaul = creditResultRepository.findAllByCustomerNationalId(creditResult.getCustomerNationalId());
+        List<CreditResult> actual = creditResultRepository.findAllByCustomerNationalId(creditResult.getCustomerNationalId());
         //then
         assertAll(
-                ()-> assertNotNull(actaul),
-                ()-> assertEquals(creditResult.getStatus(),actaul.get(0).getStatus()),
-                ()-> assertEquals(creditResult.getCustomerNationalId(),actaul.get(0).getCustomerNationalId()),
-                ()-> assertEquals(creditResult.getCreditLimit(),actaul.get(0).getCreditLimit())
+                ()-> assertNotNull(actual),
+                ()-> assertEquals(creditResult.getStatus(),actual.get(0).getStatus()),
+                ()-> assertEquals(creditResult.getCustomerNationalId(),actual.get(0).getCustomerNationalId()),
+                ()-> assertEquals(creditResult.getCreditLimit(),actual.get(0).getCreditLimit())
         );
     }
 }
