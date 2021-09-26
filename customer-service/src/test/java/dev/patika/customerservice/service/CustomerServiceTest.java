@@ -8,8 +8,10 @@ import dev.patika.customerservice.exception.NotFoundCustomerException;
 import dev.patika.customerservice.mapper.CustomerMapper;
 import dev.patika.customerservice.model.CreditResult;
 import dev.patika.customerservice.model.Customer;
+import dev.patika.customerservice.model.CustomerLogger;
 import dev.patika.customerservice.repository.CreditResultRepository;
 import dev.patika.customerservice.repository.CreditScoreRepository;
+import dev.patika.customerservice.repository.CustomerLoggerRepository;
 import dev.patika.customerservice.repository.CustomerRepository;
 import dev.patika.customerservice.util.CalculateCreditResult;
 import org.junit.jupiter.api.Test;
@@ -48,6 +50,9 @@ class CustomerServiceTest {
 
     @Mock
     CreditResultRepository creditResultRepository;
+
+    @Mock
+    CustomerLoggerRepository customerLoggerRepository;
 
     @InjectMocks
     CustomerService customerService;
@@ -122,7 +127,9 @@ class CustomerServiceTest {
         //given
         Customer customer = new Customer();
         CustomerResponseDTO expected = new CustomerResponseDTO();
+        CustomerLogger customerLogger = new CustomerLogger();
         when(customerRepository.findByNationalId(anyString())).thenReturn(Optional.of(customer));
+        when(customerLoggerRepository.save(any(CustomerLogger.class))).thenReturn(customerLogger);
         when(customerRepository.save(customer)).thenReturn(customer);
         when(customerMapper.mapFromCustomertoCustomerResponseDTO(customer)).thenReturn(expected);
         //when
