@@ -39,24 +39,25 @@ public class ErrorResponseRepositoryTest {
     @AfterEach
     public void cleanUp(){
         errorResponse = null;
+        errorResponseRepository.deleteAll();
     }
 
     @Test
     void should_ReturnListErrorResponse_When_FindAll() {
         //given
         //when
-        List<ErrorResponse> expected=errorResponseRepository.findAll();
+        List<ErrorResponse> actual=errorResponseRepository.findAll();
         //then
-        assertNotNull(expected);
+        assertNotNull(actual);
     }
 
     @Test
     void should_ReturnListErrorResponse_When_FindAllByStatus() {
         //given
         //when
-        List<ErrorResponse> expected = errorResponseRepository.findAllByStatus(400);
+        List<ErrorResponse> actual = errorResponseRepository.findAllByStatus(400);
         //then
-        assertNotNull(expected);
+        assertNotNull(actual);
     }
 
 }
