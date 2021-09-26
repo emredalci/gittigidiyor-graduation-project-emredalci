@@ -17,6 +17,7 @@ import dev.patika.customerservice.repository.CreditScoreRepository;
 import dev.patika.customerservice.repository.CustomerLoggerRepository;
 import dev.patika.customerservice.repository.CustomerRepository;
 import dev.patika.customerservice.util.CalculateCreditResult;
+import dev.patika.customerservice.util.CustomerLoggerSaveToDatabase;
 import dev.patika.customerservice.util.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -90,7 +91,8 @@ public class CustomerService implements BaseService<CustomerService>{
             logger.error("Customer Service update customer process error" +ErrorMessage.CUSTOMER_IS_NOT_FOUND);
             throw new NotFoundCustomerException(ErrorMessage.CUSTOMER_IS_NOT_FOUND);
         }
-        this.saveCustomerLoggerToDatabase(customerUpdateDTO,customer.get());
+        CustomerLogger customerLogger = CustomerLoggerSaveToDatabase.saveToDatabase(customerUpdateDTO,customer.get());
+        customerLoggerRepository.save(customerLogger);
         CustomerMapper.INSTANCE.mapFromCustomerUpdateDTOtoCustomer(customerUpdateDTO,customer.get());
         customer.get().setLastModifiedDate(Instant.now());
         customerRepository.save(customer.get());
@@ -172,21 +174,6 @@ public class CustomerService implements BaseService<CustomerService>{
                 .map(customerLoggerMapper::mapFromCustomerLoggertoCustomerLoggerResponseDTO)
                 .collect(Collectors.toList());
     }
-
-    private void saveCustomerLoggerToDatabase(CustomerUpdateDTO customerUpdateDTO,Customer customer){
-        CustomerLogger customerLogger = new CustomerLogger();
-        customerLogger.setFirstNameBefore(customer.getFirstName());
-        customerLogger.setFirstNameAfter(customerUpdateDTO.getFirstName());
-        customerLogger.setLastNameBefore(customer.getLastName());
-        customerLogger.setLastNameAfter(customerUpdateDTO.getLastName());
-        customerLogger.setIncomeBefore(customer.getIncome());
-        customerLogger.setIncomeAfter(customerUpdateDTO.getIncome());
-        customerLogger.setPhoneNumberBefore(customer.getPhoneNumber());
-        customerLogger.setPhoneNumberAfter(customerUpdateDTO.getPhoneNumber());
-        customerLogger.setNationalId(customer.getNationalId());
-        customerLoggerRepository.save(customerLogger);
-    }
-
 
 
 

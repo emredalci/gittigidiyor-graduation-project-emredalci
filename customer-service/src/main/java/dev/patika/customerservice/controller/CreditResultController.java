@@ -5,16 +5,14 @@ import dev.patika.customerservice.dto.CreditResultResponseDTO;
 import dev.patika.customerservice.service.CreditResultService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/result")
+@CrossOrigin
 public class CreditResultController {
 
     private final CreditResultService creditResultService;

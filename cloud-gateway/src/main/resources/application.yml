@@ -28,6 +28,15 @@ spring:
       filter:
         circuit-breaker:
           enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
     config:
       import-check:
         enabled: false
