@@ -1,16 +1,20 @@
 package dev.patika.customerservice.service;
 
 import dev.patika.customerservice.dto.CustomerDTO;
+import dev.patika.customerservice.dto.CustomerLoggerResponseDTO;
 import dev.patika.customerservice.dto.CustomerResponseDTO;
 import dev.patika.customerservice.dto.CustomerUpdateDTO;
 import dev.patika.customerservice.exception.CustomerIsAlreadyExistException;
 import dev.patika.customerservice.exception.NotFoundCustomerException;
+import dev.patika.customerservice.mapper.CustomerLoggerMapper;
 import dev.patika.customerservice.mapper.CustomerMapper;
 import dev.patika.customerservice.model.CreditResult;
 import dev.patika.customerservice.model.Customer;
+import dev.patika.customerservice.model.CustomerLogger;
 import dev.patika.customerservice.model.enumeration.Status;
 import dev.patika.customerservice.repository.CreditResultRepository;
 import dev.patika.customerservice.repository.CreditScoreRepository;
+import dev.patika.customerservice.repository.CustomerLoggerRepository;
 import dev.patika.customerservice.repository.CustomerRepository;
 import dev.patika.customerservice.util.CalculateCreditResult;
 import dev.patika.customerservice.util.ErrorMessage;
@@ -36,6 +40,8 @@ public class CustomerService implements BaseService<CustomerService>{
     private final RestTemplate restTemplate;
     private final CreditScoreRepository creditScoreRepository;
     private final CreditResultRepository creditResultRepository;
+    private final CustomerLoggerRepository customerLoggerRepository;
+    private final CustomerLoggerMapper customerLoggerMapper;
 
     Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
@@ -158,4 +164,30 @@ public class CustomerService implements BaseService<CustomerService>{
                 .map(customerMapper::mapFromCustomertoCustomerResponseDTO)
                 .collect(Collectors.toList());
     }
+
+
+    public List<CustomerLoggerResponseDTO> getAllCustomerLoggers(){
+        return customerLoggerRepository.findAll()
+                .stream()
+                .map(customerLoggerMapper::mapFromCustomerLoggertoCustomerLoggerResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    private void saveCustomerLoggerToDatabase(CustomerUpdateDTO customerUpdateDTO,Customer customer){
+        CustomerLogger customerLogger = new CustomerLogger();
+        customerLogger.setFirstNameBefore(customer.getFirstName());
+        customerLogger.setFirstNameAfter(customerUpdateDTO.getFirstName());
+        customerLogger.setLastNameBefore(customer.getLastName());
+        customerLogger.setLastNameAfter(customerUpdateDTO.getLastName());
+        customerLogger.setIncomeBefore(customer.getIncome());
+        customerLogger.setIncomeAfter(customerUpdateDTO.getIncome());
+        customerLogger.setPhoneNumberBefore(customer.getPhoneNumber());
+        customerLogger.setPhoneNumberAfter(customerUpdateDTO.getPhoneNumber());
+        customerLogger.setNationalId(customer.getNationalId());
+        customerLoggerRepository.save(customerLogger);
+    }
+
+
+
+
 }
