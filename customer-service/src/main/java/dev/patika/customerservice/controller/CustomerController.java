@@ -1,6 +1,7 @@
 package dev.patika.customerservice.controller;
 
 import dev.patika.customerservice.dto.CustomerDTO;
+import dev.patika.customerservice.dto.CustomerLoggerResponseDTO;
 import dev.patika.customerservice.dto.CustomerResponseDTO;
 import dev.patika.customerservice.dto.CustomerUpdateDTO;
 import dev.patika.customerservice.service.CustomerService;
@@ -40,5 +41,10 @@ public class CustomerController {
     @DeleteMapping("/{nationalId}")
     public ResponseEntity<CustomerResponseDTO> deleteCustomer(@PathVariable String nationalId){
         return ResponseEntity.ok(customerService.deleteCustomer(nationalId));
+    }
+
+    @GetMapping("/log")
+    public ResponseEntity<List<CustomerLoggerResponseDTO>> getAllCustomerLoggers(){
+        return ResponseEntity.ok(customerService.getAllCustomerLoggers());
     }
 }
