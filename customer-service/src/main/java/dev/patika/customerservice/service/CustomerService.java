@@ -90,7 +90,7 @@ public class CustomerService implements BaseService<CustomerService>{
             logger.error("Customer Service update customer process error" +ErrorMessage.CUSTOMER_IS_NOT_FOUND);
             throw new NotFoundCustomerException(ErrorMessage.CUSTOMER_IS_NOT_FOUND);
         }
-
+        this.saveCustomerLoggerToDatabase(customerUpdateDTO,customer.get());
         CustomerMapper.INSTANCE.mapFromCustomerUpdateDTOtoCustomer(customerUpdateDTO,customer.get());
         customer.get().setLastModifiedDate(Instant.now());
         customerRepository.save(customer.get());
@@ -166,8 +166,8 @@ public class CustomerService implements BaseService<CustomerService>{
     }
 
 
-    public List<CustomerLoggerResponseDTO> getAllCustomerLoggers(){
-        return customerLoggerRepository.findAll()
+    public List<CustomerLoggerResponseDTO> getAllCustomerLoggersByNationalId(String nationalId){
+        return customerLoggerRepository.findAllByNationalId(nationalId)
                 .stream()
                 .map(customerLoggerMapper::mapFromCustomerLoggertoCustomerLoggerResponseDTO)
                 .collect(Collectors.toList());

@@ -43,8 +43,8 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.deleteCustomer(nationalId));
     }
 
-    @GetMapping("/log")
-    public ResponseEntity<List<CustomerLoggerResponseDTO>> getAllCustomerLoggers(){
-        return ResponseEntity.ok(customerService.getAllCustomerLoggers());
+    @GetMapping("/log/{nationalId}")
+    public ResponseEntity<List<CustomerLoggerResponseDTO>> getAllCustomerLoggers(@PathVariable String nationalId){
+        return ResponseEntity.ok(customerService.getAllCustomerLoggersByNationalId(nationalId));
     }
 }
