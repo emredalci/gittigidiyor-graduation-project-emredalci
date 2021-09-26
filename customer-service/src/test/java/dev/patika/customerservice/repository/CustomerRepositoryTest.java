@@ -46,20 +46,20 @@ public class CustomerRepositoryTest {
     void should_ReturnBoolean_When_ExistsByNationalId() {
         //given
         //when
-        boolean expected = customerRepository.existsByNationalId(customer.getNationalId());
+        boolean actual = customerRepository.existsByNationalId(customer.getNationalId());
         //then
-        assertTrue(expected);
+        assertTrue(actual);
     }
 
     @Test
     void should_ReturnOptionalCustomer_When_FindByNationalId() {
         //given
         //when
-        Optional<Customer> expected = customerRepository.findByNationalId(customer.getNationalId());
+        Optional<Customer> actual = customerRepository.findByNationalId(customer.getNationalId());
         //then
         assertAll(
-                ()-> assertNotNull(expected),
-                ()-> assertEquals(expected.get().getNationalId(),customer.getNationalId())
+                ()-> assertNotNull(actual),
+                ()-> assertEquals(actual.get().getNationalId(),customer.getNationalId())
         );
     }
 }
