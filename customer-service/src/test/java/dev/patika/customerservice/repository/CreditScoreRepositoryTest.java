@@ -34,6 +34,7 @@ public class CreditScoreRepositoryTest {
     @AfterEach
     public void cleanUp(){
         creditScore=null;
+        creditScoreRepository.deleteAll();
     }
 
 
@@ -42,9 +43,9 @@ public class CreditScoreRepositoryTest {
     void should_Double_When_FindCreditScore() {
         //given
         //when
-        double expected=creditScoreRepository.findCreditScore(creditScore.getLastNumber());
+        double actual=creditScoreRepository.findCreditScore(creditScore.getLastNumber());
         //then
-        assertNotNull(expected);
-        assertEquals(expected,creditScore.getScore());
+        assertNotNull(actual);
+        assertEquals(actual,creditScore.getScore());
     }
 }
