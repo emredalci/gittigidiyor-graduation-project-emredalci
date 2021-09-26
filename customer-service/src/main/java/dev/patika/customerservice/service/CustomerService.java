@@ -17,7 +17,7 @@ import dev.patika.customerservice.repository.CreditScoreRepository;
 import dev.patika.customerservice.repository.CustomerLoggerRepository;
 import dev.patika.customerservice.repository.CustomerRepository;
 import dev.patika.customerservice.util.CalculateCreditResult;
-import dev.patika.customerservice.util.CustomerLoggerSaveToDatabase;
+import dev.patika.customerservice.util.CreateCustomerLogger;
 import dev.patika.customerservice.util.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -91,7 +91,7 @@ public class CustomerService implements BaseService<CustomerService>{
             logger.error("Customer Service update customer process error" +ErrorMessage.CUSTOMER_IS_NOT_FOUND);
             throw new NotFoundCustomerException(ErrorMessage.CUSTOMER_IS_NOT_FOUND);
         }
-        CustomerLogger customerLogger = CustomerLoggerSaveToDatabase.saveToDatabase(customerUpdateDTO,customer.get());
+        CustomerLogger customerLogger = CreateCustomerLogger.createCustomerLogger(customerUpdateDTO,customer.get());
         customerLoggerRepository.save(customerLogger);
         CustomerMapper.INSTANCE.mapFromCustomerUpdateDTOtoCustomer(customerUpdateDTO,customer.get());
         customer.get().setLastModifiedDate(Instant.now());
