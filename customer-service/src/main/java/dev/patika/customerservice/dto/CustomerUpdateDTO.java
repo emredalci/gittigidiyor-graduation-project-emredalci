@@ -1,6 +1,8 @@
 package dev.patika.customerservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.patika.customerservice.config.annotation.Name;
+import dev.patika.customerservice.config.annotation.PhoneNumber;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,12 +20,12 @@ public class CustomerUpdateDTO {
 
     @ApiModelProperty(example = "Emre")
     @NotBlank(message = "First name is mandatory")
-    @Pattern(regexp = "^[\\p{L}]+([(\\s)$]?+[\\p{L}]+)+",message = "Invalid first name")
+    @Name
     private String firstName;
 
     @ApiModelProperty(example = "Dalcı")
     @NotBlank(message = "Last name is mandatory")
-    @Pattern(regexp = "^[\\p{L}]+([(\\s)$]?+[\\p{L}]+)+",message = "Invalid last name")
+    @Name
     private String lastName;
 
 
@@ -35,6 +37,6 @@ public class CustomerUpdateDTO {
 
     @ApiModelProperty(example = "05391111111")
     @NotBlank(message = "Phone number is mandatory")
-    @Pattern(regexp = "^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$",message = "Invalid phone number")
+    @PhoneNumber
     private String phoneNumber;
 }
