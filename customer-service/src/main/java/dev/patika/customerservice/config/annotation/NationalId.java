@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = NationalIdValidator.class)
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD,ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NationalId {
     String message() default "Invalid national id";
