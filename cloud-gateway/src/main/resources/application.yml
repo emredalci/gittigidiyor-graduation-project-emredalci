@@ -10,7 +10,7 @@ spring:
         - id: CUSTOMER-SERVICE
           uri: lb://CUSTOMER-SERVICE
           predicates:
-            - Path=/customer/**
+            - Path=/customer/**,/result/**
           filters:
             - name: CircuitBreaker
               args:
