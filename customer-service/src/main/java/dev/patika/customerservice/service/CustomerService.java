@@ -167,7 +167,12 @@ public class CustomerService implements BaseService<CustomerService>{
                 .collect(Collectors.toList());
     }
 
-
+    /** The method implements the customer looger find processs by national id.
+     * If customer does not exist, the method return empty list
+     *
+     * @param nationalId
+     * @return CustomerLoggerResponseDTO list.
+     */
     public List<CustomerLoggerResponseDTO> getAllCustomerLoggersByNationalId(String nationalId){
         return customerLoggerRepository.findAllByNationalId(nationalId)
                 .stream()
