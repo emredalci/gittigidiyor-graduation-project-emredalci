@@ -202,6 +202,7 @@ $ cd gittigidiyor-graduation-project-emredalci
 ## To Do List
 
 * Docker needs to be improved
+* Frontend needs to be improved
 * Spring security can be added
 
 
