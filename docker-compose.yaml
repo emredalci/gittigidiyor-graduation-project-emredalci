@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  cloud-config-server:
+    image: 'emredalci/cloud-config-server'
+    container_name: cloud-config-server
+    ports:
+      - 9296:9296
+  customer-service:
+    image: 'emredalci/customer-service'
+    container_name: customer-service
+    ports:
+      - 9001:9001
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    links:
+      - service-registry
+  cloud-gateway:
+    image: 'emredalci/cloud-gateway'
+    container_name: cloud-gateway
+    ports:
+      - 9191:9191
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    links:
+      - service-registry
+  notification-service:
+    image: 'emredalci/notification-service'
+    container_name: notification-service
+    ports:
+      - 9002:9002
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    links:
+      - service-registry
+  service-registry:
+    image: 'emredalci/service-registry'
+    container_name: service-registry
+    ports:
+      - 8761:8761
+  zipkin:
+    image: openzipkin/zipkin-slim
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
+
+
+volumes:
+  data: {}
+
