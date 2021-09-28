@@ -31,6 +31,9 @@
       <a href="#usage">Usage</a>
     </li>
     <li>
+      <a href="#todo">To do List</a>
+    </li>
+    <li>
         <a href="#contributing">Contributing</a>
     </li>
     <li>
@@ -53,7 +56,7 @@ Writing a restful application for a credit application system, which will take t
 <br/>
 
 
-![odevpart4](doc/architecture.jpg)
+![architecture](doc/architecture.jpg)
 
 
 ### Built With
@@ -180,6 +183,20 @@ $ cd gittigidiyor-graduation-project-emredalci
 <p>All logs can be seen in relevant database</p>
 <p>For customer service : http://localhost:9001/h2-console</p>
 <p>For notification service : http://localhost:9002/h2-console</p>
+
+<br/>
+
+
+**Zipkin Screenshots**
+
+![architecture](doc/zipkin-customer-service2.png)
+
+![architecture](doc/zipkin-dependencies.png)
+
+## To Do List
+
+* Docker needs to be improved
+* Spring security can be added
 
 
 ## Contributing
