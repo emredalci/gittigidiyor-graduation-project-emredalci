@@ -31,7 +31,7 @@
       <a href="#usage">Usage</a>
     </li>
     <li>
-      <a href="#todolist">To do List</a>
+      <a href="#to-do-list">To do List</a>
     </li>
     <li>
         <a href="#contributing">Contributing</a>
