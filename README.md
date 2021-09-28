@@ -61,6 +61,7 @@ Writing a restful application for a credit application system, which will take t
 
 ### Built With
 
+* [JDK8+](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)
 * [Lombok](https://projectlombok.org/)
 * [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway#overview)
 * [Zipkin](https://zipkin.io/)
@@ -74,6 +75,8 @@ Writing a restful application for a credit application system, which will take t
 
 ## Installation
 <br/>
+
+**To run locally**
 
 **1. Clone the application**
 
@@ -125,10 +128,13 @@ $ cd gittigidiyor-graduation-project-emredalci
   $ java -jar zipkin-server-2.23.4-exec.jar
   ```
 
+**To run with docker(under development)**
+  ```shell
+  $ docker-compose up
+  ```
+
 
 ## Usage
-
-//Front end ekran görüntüleri
 
 
 
