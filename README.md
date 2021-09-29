@@ -84,46 +84,42 @@ Writing a restful application for a credit application system, which will take t
 $ git clone https://github.com/113-GittiGidiyor-Java-Spring-Bootcamp/gittigidiyor-graduation-project-emredalci
 $ cd gittigidiyor-graduation-project-emredalci
 ```
+
 **2. Service Registry**
 
-  ```shell
+```shell
   $ cd service-registry
-  $ mvn package
-  $ java -jar target/service-registry-0.0.1-SNAPSHOT.jar
-  ```
+  $ mvn spring-boot:run
+```
 **2. Config Server**
 
-  ```shell
+```shell
   $ cd cloud-config-server
-  $ mvn package
-  $ java -jar target/cloud-config-server-0.0.1-SNAPSHOT.jar
-  ```
+  $ mvn spring-boot:run
+```
 
 **3. Cloud Gateway**
 
-  ```shell
+```shell
   $ cd cloud-gateway
-  $ mvn package
-  $ java -jar target/cloud-gateway-0.0.1-SNAPSHOT.jar
-  ```
+  $ mvn spring-boot:run
+```
 
 **4. Customer Service**
 
-  ```shell
+```shell
   $ cd customer-service
-  $ mvn package
-  $ java -jar target/customer-service-0.0.1-SNAPSHOT.jar
-  ```
+  $ mvn spring-boot:run
+```
 
-**4. Notification Service**
+**5. Notification Service**
 
-  ```shell
+```shell
   $ cd notification-service
-  $ mvn package
-  $ java -jar target/notification-service-0.0.1-SNAPSHOT.jar
-  ```
+  $ mvn spring-boot:run
+```
 
-**5. Zipkin Server**
+**6. Zipkin Server**
   ```shell
   $ java -jar zipkin-server-2.23.4-exec.jar
   ```
