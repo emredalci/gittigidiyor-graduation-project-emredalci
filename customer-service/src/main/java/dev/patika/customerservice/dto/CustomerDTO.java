@@ -46,6 +46,7 @@ public class CustomerDTO {
     @ApiModelProperty(example = "05391111111")
     @NotBlank(message = "Phone number is mandatory")
     @PhoneNumber
+    @NotNull
     private String phoneNumber;
 
 

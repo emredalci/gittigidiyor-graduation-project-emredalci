@@ -18,7 +18,7 @@ public class NameValidator implements ConstraintValidator<Name,String> {
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext context) {
-        Matcher matcher = NAME_PATTERN.matcher(name);
+        Matcher matcher = NAME_PATTERN.matcher(name!=null?name:"");
         return matcher.matches();
     }
 }

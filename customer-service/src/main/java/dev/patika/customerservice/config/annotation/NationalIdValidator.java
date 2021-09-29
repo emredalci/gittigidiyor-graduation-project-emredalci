@@ -17,7 +17,7 @@ public class NationalIdValidator implements ConstraintValidator<NationalId,Strin
 
     @Override
     public boolean isValid(String nationalId, ConstraintValidatorContext context) {
-        Matcher matcher=NATIONAL_ID_PATTERN.matcher(nationalId);
+        Matcher matcher=NATIONAL_ID_PATTERN.matcher(nationalId!=null?nationalId:"");
         return matcher.matches();
     }
 }
