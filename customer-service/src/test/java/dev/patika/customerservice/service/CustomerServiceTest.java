@@ -79,7 +79,10 @@ class CustomerServiceTest {
                 ()-> assertEquals(expected.getLastName(),actual.getLastName()),
                 ()-> assertEquals(expected.getNationalId(),actual.getNationalId()),
                 ()-> assertEquals(expected.getPhoneNumber(),actual.getPhoneNumber()),
-                ()-> assertEquals(expected.getIncome(),actual.getIncome())
+                ()-> assertEquals(expected.getIncome(),actual.getIncome()),
+                ()-> verify(customerMapper).mapFromCustomertoCustomerResponseDTO(customer),
+                ()-> verify(customerRepository).save(customer),
+                ()-> verify(customerMapper).mapFromCustomerDTOtoCustomer(any(CustomerDTO.class))
         );
     }
 
@@ -110,7 +113,8 @@ class CustomerServiceTest {
         String actual = customerService.applyForLoan(nationalId);
         //then
         assertAll(
-                ()-> assertNotNull(actual)
+                ()-> assertNotNull(actual),
+                ()-> verify(creditResultRepository).save(creditResult)
         );
     }
 
@@ -140,7 +144,9 @@ class CustomerServiceTest {
         assertAll(
                 ()-> assertNotNull(actual),
                 ()-> assertNotNull(expected),
-                ()-> assertEquals(expected.getId(),actual.getId())
+                ()-> assertEquals(expected.getId(),actual.getId()),
+                ()-> verify(customerRepository).save(customer),
+                ()-> verify(customerMapper).mapFromCustomertoCustomerResponseDTO(customer)
         );
     }
 
@@ -174,7 +180,8 @@ class CustomerServiceTest {
                 ()-> assertEquals(expected.getLastName(),actual.getLastName()),
                 ()-> assertEquals(expected.getNationalId(),actual.getNationalId()),
                 ()-> assertEquals(expected.getPhoneNumber(),actual.getPhoneNumber()),
-                ()-> assertEquals(expected.getIncome(),actual.getIncome())
+                ()-> assertEquals(expected.getIncome(),actual.getIncome()),
+                ()-> verify(customerMapper).mapFromCustomertoCustomerResponseDTO(customer)
 
         );
     }
