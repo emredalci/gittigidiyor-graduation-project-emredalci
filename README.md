@@ -76,7 +76,7 @@ Writing a restful application for a credit application system, which will take t
 ## Installation
 <br/>
 
-**To run locally**
+**To run locally(recommended)**
 
 **1. Clone the application**
 
