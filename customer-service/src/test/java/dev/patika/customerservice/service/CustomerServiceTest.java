@@ -1,10 +1,12 @@
 package dev.patika.customerservice.service;
 
 import dev.patika.customerservice.dto.CustomerDTO;
+import dev.patika.customerservice.dto.CustomerLoggerResponseDTO;
 import dev.patika.customerservice.dto.CustomerResponseDTO;
 import dev.patika.customerservice.dto.CustomerUpdateDTO;
 import dev.patika.customerservice.exception.CustomerIsAlreadyExistException;
 import dev.patika.customerservice.exception.NotFoundCustomerException;
+import dev.patika.customerservice.mapper.CustomerLoggerMapper;
 import dev.patika.customerservice.mapper.CustomerMapper;
 import dev.patika.customerservice.model.CreditResult;
 import dev.patika.customerservice.model.Customer;
@@ -24,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +56,9 @@ class CustomerServiceTest {
 
     @Mock
     CustomerLoggerRepository customerLoggerRepository;
+
+    @Mock
+    CustomerLoggerMapper customerLoggerMapper;
 
     @InjectMocks
     CustomerService customerService;
@@ -210,6 +216,28 @@ class CustomerServiceTest {
                 ()-> assertEquals(1,actual.size()),
                 ()-> assertEquals(customerResponseDTO,actual.get(0)),
                 ()-> verify(customerMapper).mapFromCustomertoCustomerResponseDTO(customer)
+        );
+    }
+
+    @Test
+    void should_ReturnListCustomerLoggerResponseDTO_When_getAllCustomerLoggersByNationalId(){
+        //given
+        CustomerLogger customerLogger = new CustomerLogger();
+        customerLogger.setNationalId("13758028554");
+        List<CustomerLogger> customerLoggerList = Collections.singletonList(customerLogger);
+        CustomerLoggerResponseDTO customerLoggerResponseDTO = new CustomerLoggerResponseDTO();
+        when(customerLoggerRepository.findAllByNationalId(anyString())).thenReturn(customerLoggerList);
+        when(customerLoggerMapper
+                .mapFromCustomerLoggertoCustomerLoggerResponseDTO(any(CustomerLogger.class)))
+                .thenReturn(customerLoggerResponseDTO);
+        //when
+        List<CustomerLoggerResponseDTO> actual = customerService.getAllCustomerLoggersByNationalId("13758028554");
+
+        //then
+        assertAll(
+                ()->assertEquals(1,actual.size()),
+                ()->assertEquals(customerLoggerResponseDTO,actual.get(0)),
+                ()-> verify(customerLoggerMapper).mapFromCustomerLoggertoCustomerLoggerResponseDTO(any(CustomerLogger.class))
         );
     }
 
